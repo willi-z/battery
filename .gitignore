@@ -1,0 +1,8 @@
+.vscode/
+__pycache__/
+
+*.png
+
+*.msh
+*.h5
+*.xdmf
