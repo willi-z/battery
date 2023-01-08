@@ -1,2 +1,2 @@
-from .rect_2d import generate_2d_plane_mesh
-from .rect_2d_holes import generate_2d_plane_width_holes_mesh
+from .rect_2d import generate_2d_rect_mesh
+from .rect_2d_holes import generate_2d_rect_width_holes_mesh

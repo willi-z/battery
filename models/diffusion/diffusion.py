@@ -1,14 +1,15 @@
 import numpy as np
-from dolfinx.io.gmshio import model_to_mesh
-from mpi4py import MPI
-import gmsh
 
 from dolfinx import fem, io
 from ufl import ds, dx, grad, dot, inner, TrialFunction, TestFunction, FiniteElement, Measure, FacetNormal, lhs, rhs, SpatialCoordinate
 from petsc4py import PETSc
 from petsc4py.PETSc import ScalarType
 from tqdm import tqdm
-from .meshes import  generate_2d_plane_mesh
+
+
+def get_vals_at_tag() -> np.ndarray:
+    
+
 
 """
 simulate eps*dc/dt+ \nabla \cdot (-diffusivity cdot \nabla c) = 
@@ -27,9 +28,8 @@ def sim_diffusion(
     outflow_tag = 3
     ):
 
-    mesh_generator()
-    # https://jsdokken.com/src/tutorial_gmsh.html
-    mesh, cell_tags, facet_tags = model_to_mesh(gmsh.model, MPI.COMM_WORLD, model_rank)
+    
+    mesh, cell_tags, facet_tags = mesh_generator()
 
     fdim = mesh.topology.dim - 1
     s_conc = FiniteElement("CG", mesh.ufl_cell(), 2) # scaler valued concentration function
@@ -61,7 +61,7 @@ def sim_diffusion(
 
     conc, v = TrialFunction(fs_conc), TestFunction(fs_conc) # trail and test
 
-    a = eps* conc * v *dx + dt * dot(-diff * grad(conc), grad(v)) * dx
+    a = eps* conc * v *dx + dt * dot(diff * grad(conc), grad(v)) * dx
     L = eps * inner(conc_n, v) * dx
 
     bilinear_form = fem.form(a)
@@ -107,6 +107,3 @@ def sim_diffusion(
         xdmf.write_function(conc_n, t)
 
     xdmf.close()
-
-
-if __name__ == "__main__":

@@ -2,11 +2,11 @@ import gmsh
 import numpy as np
 
 
-def generate_2d_plane_mesh(width = 30, height = 10):
+def generate_2d_rect_mesh(width = 30, height = 10):
     gmsh.initialize()
     gmsh.clear()
 
-    gmsh.model.add("2d plane") # title
+    gmsh.model.add("rect 2d") # title
 
     x, y, z = 0, -height/2, 0
     plane = gmsh.model.occ.addRectangle(x, y, z, width, height, 0)

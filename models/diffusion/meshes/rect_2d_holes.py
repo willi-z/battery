@@ -2,9 +2,9 @@ import gmsh
 import numpy as np
 
 import sys
-from helpers import poision_distribution
+from .helpers import poision_distribution
 
-def generate_2d_plane_width_holes_mesh(
+def generate_2d_rect_width_holes_mesh(
     width = 30, 
     height = 10, 
     r_holes = 1.5, 
@@ -13,7 +13,7 @@ def generate_2d_plane_width_holes_mesh(
     gmsh.initialize()
     gmsh.clear()
 
-    gmsh.model.add("2d plane") # title
+    gmsh.model.add("rect 2d with holes") # title
 
     x, y, z = 0, -height/2, 0
     plane = gmsh.model.occ.addRectangle(x, y, z, width, height, 0)
