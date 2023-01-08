@@ -18,7 +18,7 @@ def generate_2d_plane_mesh(width = 30, height = 10):
     2 - surface
     3 - volume
     """
-    gmsh.model.addPhysicalGroup(2, [plane], tag=1, name="rect plane")
+    gmsh.model.addPhysicalGroup(2, [plane], tag=1, name="substance")
 
     inflow, outflow, walls = [], [], []
     inflow_tag, outflow_tag, wall_tag = 2, 3, 4

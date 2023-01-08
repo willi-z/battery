@@ -2,13 +2,14 @@ import gmsh
 import numpy as np
 
 import sys
-
-sys.path.append('articles')
-
-
 from helpers import poision_distribution
 
-def generate_2d_plane_width_holes_mesh(width = 30, height = 10, r_holes = 1.5, min_dist=0.5):
+def generate_2d_plane_width_holes_mesh(
+    width = 30, 
+    height = 10, 
+    r_holes = 1.5, 
+    min_dist=0.5,
+    seed=None):
     gmsh.initialize()
     gmsh.clear()
 
@@ -27,7 +28,7 @@ def generate_2d_plane_width_holes_mesh(width = 30, height = 10, r_holes = 1.5, m
         http://devmag.org.za/2009/05/03/poisson-disk-sampling/
     """
 
-    points = poision_distribution([width, height], 2 * r_holes + min_dist)
+    points = poision_distribution([width, height], 2 * r_holes + min_dist, 20, seed)
     n_holes = len(points)
     obstacles = []
     cuts = []
@@ -38,7 +39,7 @@ def generate_2d_plane_width_holes_mesh(width = 30, height = 10, r_holes = 1.5, m
         obstacle = gmsh.model.occ.addDisk(center[0], center[1], 0, r_holes, r_holes)
         cuts.append((gdim, obstacle))
         obstacles.append(obstacle)
-    fluid = gmsh.model.occ.cut([(gdim, plane)], cuts)
+    substance = gmsh.model.occ.cut([(gdim, plane)], cuts)
     gmsh.model.occ.synchronize()
 
     """
@@ -47,11 +48,11 @@ def generate_2d_plane_width_holes_mesh(width = 30, height = 10, r_holes = 1.5, m
     2 - surface
     3 - volume
     """
-    fluid_marker = 1
+    substance_marker = 1
     volumes = gmsh.model.getEntities(dim=gdim)
     assert(len(volumes) == 1)
-    gmsh.model.addPhysicalGroup(volumes[0][0], [volumes[0][1]], tag= fluid_marker)
-    gmsh.model.setPhysicalName(volumes[0][0], fluid_marker, "fluid")
+    gmsh.model.addPhysicalGroup(volumes[0][0], [volumes[0][1]], tag= substance_marker)
+    gmsh.model.setPhysicalName(volumes[0][0], substance_marker, "substance")
     # gmsh.model.addPhysicalGroup(2, [plane], tag=1, name="rect plane")
 
     

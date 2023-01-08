@@ -117,7 +117,15 @@ def get_combinations(vals: list, dim: int) -> list:
                     break
     return combinations
 
-def poision_distribution(limits: list, min_dist: float, max_tries = 10) -> list:
+def poision_distribution(
+    limits: list, 
+    min_dist: float, 
+    max_tries = 10,
+    seed = None) -> list:
+
+    random.seed(seed)
+    np.random.seed(seed)
+
     dim = len(limits)
     cell_size = min_dist / np.sqrt(dim) # cell size so each grid contains at most one sample
     sizes = np.ceil(np.array(limits) / cell_size) + 1 # array with the number of cells per dimension
@@ -192,8 +200,8 @@ if __name__ == "__main__":
     # print(get_combinations([-1, 0, 1], 2))
     radius_min = 1
     limits = [10, 10]
-    points = poision_distribution(limits, radius_min, 30)
-    print(points)
+    points = poision_distribution(limits, radius_min, 30, 11)
+    # print(points)
     # points = test_detection()
     x = []
     y = []
