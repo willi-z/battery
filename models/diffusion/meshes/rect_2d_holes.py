@@ -1,7 +1,6 @@
 import gmsh
 import numpy as np
 
-import sys
 from .helpers import poision_distribution
 
 def generate_2d_rect_width_holes_mesh(
@@ -83,5 +82,5 @@ def generate_2d_rect_width_holes_mesh(
     gmsh.model.mesh.refine()
 
 if __name__=="__main__":
-    generate_2d_plane_width_holes_mesh()
+    generate_2d_rect_width_holes_mesh()
     gmsh.write("2d_plane+holes.msh")

@@ -8,12 +8,8 @@ from tqdm import tqdm
 
 
 def get_vals_at_tag() -> np.ndarray:
-    
+    pass
 
-
-"""
-simulate eps*dc/dt+ \nabla \cdot (-diffusivity cdot \nabla c) = 
-"""
 def sim_diffusion(
     diff_const: float,
     eps_const: float,
@@ -27,7 +23,9 @@ def sim_diffusion(
     inflow_tag = 2,
     outflow_tag = 3
     ):
-
+    """
+    simulate eps*dc/dt+ \nabla \cdot (-diffusivity cdot \nabla c) = 
+    """
     
     mesh, cell_tags, facet_tags = mesh_generator()
 
