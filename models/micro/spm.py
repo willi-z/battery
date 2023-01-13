@@ -62,5 +62,5 @@ u_ocp = lambda x: 3.7 * np.ones(len(x))
 
 t = np.arange(n_steps)
 plt.plot(t/(60*60), c_surface)
-plt.show()
+# plt.show()
 plt.savefig('spm.png')
